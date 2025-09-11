@@ -77,8 +77,9 @@ extension NetworkManager {
             guard 200...299 ~= httpResponse.statusCode else {
                 // Try to parse error response for more details
                 if let errorResponse = try? JSONDecoder().decode(AuthErrorResponse.self, from: data) {
-                    print("❌ Server error: \(errorResponse.message)")
-                    throw NetworkError.httpErrorWithMessage(httpResponse.statusCode, errorResponse.message)
+                    let errorMessage = errorResponse.errors.first?.message ?? "Unknown server error"
+                    print("❌ Server error: \(errorMessage)")
+                    throw NetworkError.httpErrorWithMessage(httpResponse.statusCode, errorMessage)
                 } else {
                     print("❌ Server error: \(httpResponse.statusCode)")
                     throw NetworkError.httpError(httpResponse.statusCode)
@@ -175,8 +176,9 @@ extension NetworkManager {
             guard 200...299 ~= httpResponse.statusCode else {
                 // Try to parse error response for more details
                 if let errorResponse = try? JSONDecoder().decode(AuthErrorResponse.self, from: data) {
-                    print("❌ Server error: \(errorResponse.message)")
-                    throw NetworkError.httpErrorWithMessage(httpResponse.statusCode, errorResponse.message)
+                    let errorMessage = errorResponse.errors.first?.message ?? "Unknown server error"
+                    print("❌ Server error: \(errorMessage)")
+                    throw NetworkError.httpErrorWithMessage(httpResponse.statusCode, errorMessage)
                 } else {
                     print("❌ Server error: \(httpResponse.statusCode)")
                     throw NetworkError.httpError(httpResponse.statusCode)

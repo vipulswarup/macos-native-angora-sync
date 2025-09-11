@@ -18,6 +18,12 @@
 		AA000000000000000017 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000018 /* KeychainManager.swift */; };
 		AA000000000000000019 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000020 /* NetworkManager.swift */; };
 		AA000000000000000023 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000024 /* PersistenceController.swift */; };
+		9C7951982E72B35900B95CA6 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7951952E72B35900B95CA6 /* AccountManager.swift */; };
+		9C7951992E72B35900B95CA6 /* AccountSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7951962E72B35900B95CA6 /* AccountSetupView.swift */; };
+		9C79519A2E72B35900B95CA6 /* MultiAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7951972E72B35900B95CA6 /* MultiAccountView.swift */; };
+		9C79519B2E72B35900B95CA6 /* AccountManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */; };
+		9C79519D2E72B35900B95CA6 /* AccountManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */; };
+		9C7951A12E72B35900B95CA6 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		AA000000000000000018 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		AA000000000000000020 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AA000000000000000024 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		9C7951952E72B35900B95CA6 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		9C7951962E72B35900B95CA6 /* AccountSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetupView.swift; sourceTree = "<group>"; };
+		9C7951972E72B35900B95CA6 /* MultiAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiAccountView.swift; sourceTree = "<group>"; };
+		9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerView.swift; sourceTree = "<group>"; };
+		9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewModel.swift; sourceTree = "<group>"; };
+		9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
 		AA000000000000000025 /* EisenVaultSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EisenVaultSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000000000000000026 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA000000000000000027 /* EisenVaultSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EisenVaultSync.entitlements; sourceTree = "<group>"; };
@@ -63,6 +75,8 @@
 				AA000000000000000004 /* ContentView.swift */,
 				AA000000000000000032 /* Auth */,
 				AA000000000000000033 /* Core */,
+				9C79519F2E72B35900B95CA6 /* Views */,
+				9C7951A02E72B35900B95CA6 /* ViewModels */,
 				AA000000000000000006 /* Assets.xcassets */,
 				AA000000000000000026 /* Info.plist */,
 				AA000000000000000027 /* EisenVaultSync.entitlements */,
@@ -85,6 +99,9 @@
 				AA000000000000000012 /* AuthService.swift */,
 				AA000000000000000014 /* LoginView.swift */,
 				AA000000000000000016 /* AuthModels.swift */,
+				9C7951952E72B35900B95CA6 /* AccountManager.swift */,
+				9C7951962E72B35900B95CA6 /* AccountSetupView.swift */,
+				9C7951972E72B35900B95CA6 /* MultiAccountView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -99,6 +116,23 @@
 				AA000000000000000047 /* EisenVaultSync.xcdatamodeld */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		9C79519F2E72B35900B95CA6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */,
+				9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9C7951A02E72B35900B95CA6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		AA000000000000000034 /* Preview Content */ = {
@@ -191,6 +225,12 @@
 				AA000000000000000011 /* AuthService.swift in Sources */,
 				AA000000000000000013 /* LoginView.swift in Sources */,
 				AA000000000000000015 /* AuthModels.swift in Sources */,
+				9C7951982E72B35900B95CA6 /* AccountManager.swift in Sources */,
+				9C7951992E72B35900B95CA6 /* AccountSetupView.swift in Sources */,
+				9C79519A2E72B35900B95CA6 /* MultiAccountView.swift in Sources */,
+				9C79519B2E72B35900B95CA6 /* AccountManagerView.swift in Sources */,
+				9C79519D2E72B35900B95CA6 /* AccountManagerViewModel.swift in Sources */,
+				9C7951A12E72B35900B95CA6 /* ErrorAlertView.swift in Sources */,
 				AA000000000000000017 /* KeychainManager.swift in Sources */,
 				AA000000000000000019 /* NetworkManager.swift in Sources */,
 				AA000000000000000023 /* PersistenceController.swift in Sources */,

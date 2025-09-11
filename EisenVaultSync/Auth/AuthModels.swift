@@ -70,8 +70,30 @@ struct UserSettings: Codable {
 }
 
 struct AuthErrorResponse: Codable {
+    let status: Int
+    let data: [String]
+    let notifications: [String]
+    let errors: [AuthErrorDetail]
+    let `_`: AuthErrorMeta?
+}
+
+struct AuthErrorDetail: Codable {
     let message: String
-    let code: String?
+    let validation: String?
+    let field: String?
+    let serviceResponse: String?
+}
+
+struct AuthErrorMeta: Codable {
+    let service: String?
+    let appVersion: String?
+    let submoduleVersion: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case service
+        case appVersion = "app_version"
+        case submoduleVersion = "submodule_version"
+    }
 }
 
 struct TokenVerificationResponse: Codable {

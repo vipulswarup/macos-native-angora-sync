@@ -8,11 +8,8 @@ class AuthService: ObservableObject {
     
     private let keychainManager = KeychainManager.shared
     private let networkManager = NetworkManager.shared
+    private let accountManager = AccountManager.shared
     private var cancellables = Set<AnyCancellable>()
-    
-    private var baseURL: String {
-        return "https://binod.angorastage.in"
-    }
     
     init() {
         checkExistingAuth()
@@ -90,6 +87,9 @@ class AuthService: ObservableObject {
             print("❌ Login failed with error: \(error)")
             
             await MainActor.run {
+                self.isAuthenticated = false
+                self.currentUser = nil
+                
                 if let authError = error as? AuthError {
                     print("❌ Auth error: \(authError.localizedDescription)")
                     self.authState = .error(authError.localizedDescription)
@@ -105,8 +105,8 @@ class AuthService: ObservableObject {
     }
     
     func logout() {
-        if let user = currentUser {
-            let accountKey = "\(baseURL)_\(user.email)"
+        if let activeAccount = accountManager.activeAccount {
+            let accountKey = accountManager.getAccountKey(for: activeAccount)
             _ = keychainManager.delete(account: accountKey)
             _ = keychainManager.deleteToken(account: accountKey)
             _ = keychainManager.deleteUserData(account: accountKey)
@@ -118,12 +118,12 @@ class AuthService: ObservableObject {
     }
     
     func verifyToken() async -> Bool {
-        guard let user = currentUser else { 
-            print("🔐 No current user found for token verification")
+        guard let activeAccount = accountManager.activeAccount else { 
+            print("🔐 No active account found for token verification")
             return false 
         }
         
-        let accountKey = "\(baseURL)_\(user.email)"
+        let accountKey = accountManager.getAccountKey(for: activeAccount)
         print("🔐 Checking for token with account key: \(accountKey)")
         
         guard let token = keychainManager.retrieveToken(account: accountKey) else { 
@@ -134,7 +134,7 @@ class AuthService: ObservableObject {
         print("🔐 Token found in keychain, verifying with server...")
         
         do {
-            guard let url = URL(string: "\(baseURL)/api/auth/token") else { return false }
+            guard let url = URL(string: "\(activeAccount.serverURL ?? "")/api/auth/token") else { return false }
             
             let response: TokenVerificationResponse = try await networkManager.makeRequest(
                 url: url,
@@ -162,46 +162,46 @@ class AuthService: ObservableObject {
     
     private func checkExistingAuth() {
         print("🔐 Checking for existing authentication...")
-        print("🔐 Base URL: \(baseURL)")
         
-        // Try to find any stored account
-        let possibleAccounts = [
-            "\(baseURL)_pankaj.singh@eisenvault.com", // Default test account
-            // Add more accounts as needed
-        ]
+        // Check if there's an active account
+        guard let activeAccount = accountManager.activeAccount else {
+            print("❌ No active account found")
+            isAuthenticated = false
+            authState = .idle
+            return
+        }
         
-        for accountKey in possibleAccounts {
-            print("🔐 Checking account: \(accountKey)")
+        let accountKey = accountManager.getAccountKey(for: activeAccount)
+        print("🔐 Checking active account: \(accountKey)")
+        
+        // Try to retrieve user data and token
+        if let userData = keychainManager.retrieveUserData(account: accountKey),
+           let _ = keychainManager.retrieveToken(account: accountKey) {
             
-            // Try to retrieve user data and token
-            if let userData = keychainManager.retrieveUserData(account: accountKey),
-               let _ = keychainManager.retrieveToken(account: accountKey) {
+            do {
+                let user = try JSONDecoder().decode(User.self, from: userData)
+                print("🔐 Found stored user: \(user.email)")
                 
-                do {
-                    let user = try JSONDecoder().decode(User.self, from: userData)
-                    print("🔐 Found stored user: \(user.email)")
-                    
-                    // Set current user and verify token
-                    currentUser = user
-                    
-                    Task {
-                        let isValid = await verifyToken()
-                        await MainActor.run {
-                            if isValid {
-                                print("✅ Found valid existing authentication")
-                                self.isAuthenticated = true
-                                self.authState = .authenticated
-                            } else {
-                                print("❌ Token verification failed")
-                                self.isAuthenticated = false
-                                self.authState = .idle
-                            }
+                // Set current user and verify token
+                currentUser = user
+                
+                Task {
+                    let isValid = await verifyToken()
+                    await MainActor.run {
+                        if isValid {
+                            print("✅ Found valid existing authentication")
+                            self.isAuthenticated = true
+                            self.authState = .authenticated
+                        } else {
+                            print("❌ Token verification failed")
+                            self.isAuthenticated = false
+                            self.authState = .idle
                         }
                     }
-                    return
-                } catch {
-                    print("❌ Failed to decode user data: \(error)")
                 }
+                return
+            } catch {
+                print("❌ Failed to decode user data: \(error)")
             }
         }
         
