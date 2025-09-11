@@ -1,0 +1,1287 @@
+{
+  "info": {
+    "name": "Angora Document Management System API",
+    "description": "Comprehensive API documentation for Angora DMS backend services",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service (Port 6001)",
+      "item": [
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "Login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "auth", "login"]
+                }
+              }
+            },
+            {
+              "name": "Logout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/auth/logout",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "auth", "logout"]
+                }
+              }
+            },
+            {
+              "name": "Verify Token",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/auth/token",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "auth", "token"]
+                }
+              }
+            },
+            {
+              "name": "Forgot Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/forgot-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "auth", "forgot-password"]
+                }
+              }
+            },
+            {
+              "name": "Reset Password",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"reset_token_here\",\n  \"password\": \"newpassword123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/auth/reset-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "auth", "reset-password"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Get Users",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/users?page=1&limit=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users", "{{user_id}}"]
+                }
+              }
+            },
+            {
+              "name": "Create User",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"roleId\": \"{{role_id}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/users",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users"]
+                }
+              }
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john.smith@example.com\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users", "{{user_id}}"]
+                }
+              }
+            },
+            {
+              "name": "Enable User",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/users/{{user_id}}/enable",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users", "{{user_id}}", "enable"]
+                }
+              }
+            },
+            {
+              "name": "Disable User",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/users/{{user_id}}/disable",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "users", "{{user_id}}", "disable"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Groups",
+          "item": [
+            {
+              "name": "Get Groups",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/groups",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "groups"]
+                }
+              }
+            },
+            {
+              "name": "Create Group",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Marketing Team\",\n  \"description\": \"Marketing department group\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/groups",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "groups"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Roles",
+          "item": [
+            {
+              "name": "Get Roles",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/roles",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "roles"]
+                }
+              }
+            },
+            {
+              "name": "Create Role",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Editor\",\n  \"description\": \"Can edit documents\",\n  \"permissions\": [\"edit_document\", \"view_document\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/roles",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "roles"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "File Service (Port 6002)",
+      "item": [
+        {
+          "name": "Files",
+          "item": [
+            {
+              "name": "Get File Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/files/{{file_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "files", "{{file_id}}"]
+                }
+              }
+            },
+            {
+              "name": "Download File",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/files/{{file_id}}/download",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "files", "{{file_id}}", "download"]
+                }
+              }
+            },
+            {
+              "name": "Get File Versions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/files/{{file_id}}/versions",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "files", "{{file_id}}", "versions"]
+                }
+              }
+            },
+            {
+              "name": "Update File Metadata",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Document Name\",\n  \"description\": \"Updated description\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/files/{{file_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "files", "{{file_id}}"]
+                }
+              }
+            },
+            {
+              "name": "Delete Files",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/files?ids={{file_id1}},{{file_id2}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "files"],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "{{file_id1}},{{file_id2}}"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Folders",
+          "item": [
+            {
+              "name": "Get Folder Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/folders/{{folder_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "folders", "{{folder_id}}"]
+                }
+              }
+            },
+            {
+              "name": "Get Folder Children",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/folders/{{folder_id}}/children",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "folders", "{{folder_id}}", "children"]
+                }
+              }
+            },
+            {
+              "name": "Create Folder",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Folder\",\n  \"parentId\": \"{{parent_folder_id}}\",\n  \"description\": \"Folder description\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/folders",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "folders"]
+                }
+              }
+            },
+            {
+              "name": "Update Folder",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Folder Name\",\n  \"description\": \"Updated description\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/folders/{{folder_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "folders", "{{folder_id}}"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Trash",
+          "item": [
+            {
+              "name": "Get Trash Items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/trashes",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "trashes"]
+                }
+              }
+            },
+            {
+              "name": "Restore Items",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"{{item_id1}}\", \"{{item_id2}}\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/trashes/restore",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "trashes", "restore"]
+                }
+              }
+            },
+            {
+              "name": "Empty Trash",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/trashes/empty",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "trashes", "empty"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Upload Service (Port 6003)",
+      "item": [
+        {
+          "name": "File Upload",
+          "item": [
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "x-parent-id",
+                    "value": "{{parent_folder_id}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/path/to/file.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/uploads",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "uploads"]
+                }
+              }
+            },
+            {
+              "name": "Upload File Version",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/path/to/new_version.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/uploads/{{file_id}}/version",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "uploads", "{{file_id}}", "version"]
+                }
+              }
+            },
+            {
+              "name": "Get Upload Status",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/uploads/{{upload_id}}/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "uploads", "{{upload_id}}", "status"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Avatars",
+          "item": [
+            {
+              "name": "Upload Avatar",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "avatar",
+                      "type": "file",
+                      "src": "/path/to/avatar.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/avatars",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "avatars"]
+                }
+              }
+            },
+            {
+              "name": "Delete Avatar",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/avatars",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "avatars"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Base Service (Port 6000)",
+      "item": [
+        {
+          "name": "Settings",
+          "item": [
+            {
+              "name": "Get Settings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/settings",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "settings"]
+                }
+              }
+            },
+            {
+              "name": "Update Globalization Settings",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"defaultLanguage\": \"en\",\n  \"defaultCurrency\": \"USD\",\n  \"defaultTimezone\": \"UTC\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/settings/globalization",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "settings", "globalization"]
+                }
+              }
+            },
+            {
+              "name": "Update Branding",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companyName\": \"Angora DMS\",\n  \"logo\": \"base64_encoded_logo\",\n  \"primaryColor\": \"#007bff\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/settings/branding",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "settings", "branding"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Currencies",
+          "item": [
+            {
+              "name": "Get Currencies",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/currencies",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "currencies"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Audit Trails Service (Port 6006)",
+      "item": [
+        {
+          "name": "Audit Logs",
+          "item": [
+            {
+              "name": "Get Audit Logs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/audit-trails?page=1&limit=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "audit-trails"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Audit Log by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/audit-trails/{{audit_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "audit-trails", "{{audit_id}}"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search Service (Port 7002)",
+      "item": [
+        {
+          "name": "Search",
+          "item": [
+            {
+              "name": "Search Documents",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/search?q=document&page=1&limit=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "search"],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "document"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Save Search",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"important documents\",\n  \"filters\": {\n    \"dateRange\": \"last30days\",\n    \"fileType\": \"pdf\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/search/history",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "search", "history"]
+                }
+              }
+            },
+            {
+              "name": "Get Search History",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/search/history",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "search", "history"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Registry Service (Port 7000)",
+      "item": [
+        {
+          "name": "Services",
+          "item": [
+            {
+              "name": "Get All Services",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/services",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "services"]
+                }
+              }
+            },
+            {
+              "name": "Get Service by Name",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/services/user-service",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "services", "user-service"]
+                }
+              }
+            },
+            {
+              "name": "Register Service",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"user-service\",\n  \"hostname\": \"user.angora.com\",\n  \"ip\": \"192.168.1.100\",\n  \"port\": 6001,\n  \"service_id\": \"user-service-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/services",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "services"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Notification Service (Port 7001)",
+      "item": [
+        {
+          "name": "Outbound",
+          "item": [
+            {
+              "name": "Test Outbound Mail",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"test@example.com\",\n  \"subject\": \"Test Email\",\n  \"body\": \"This is a test email\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/outbound/test-outbound-mail",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "outbound", "test-outbound-mail"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "user_id_here",
+      "type": "string"
+    },
+    {
+      "key": "file_id",
+      "value": "file_id_here",
+      "type": "string"
+    },
+    {
+      "key": "folder_id",
+      "value": "folder_id_here",
+      "type": "string"
+    }
+  ]
+}
