@@ -2,20 +2,84 @@ import Foundation
 
 struct FolderMetadata: Codable, Identifiable, Hashable {
     let id: String
-    let name: String
-    let parentId: String?
-    let path: String
+    let rawFileName: String
+    let description: String?
+    let parentPath: String?
+    let materializePath: String
+    let originalCloudRelativePath: String?
+    let convertedCloudRelativePath: String?
+    let documentCategory: String?
+    let dataEntry: [DataEntry]?
+    let size: Int64
+    let portal: String
+    let fileCount: Int
+    let collaborators: [Collaborator]?
+    let isBeingTrashed: Bool
+    let isBeingMoved: Bool
+    let isBeingCopied: Bool
+    let isDepartment: Bool
+    let isFolder: Bool
+    let isFile: Bool
+    let isLocked: Bool?
+    let createdBy: String
+    let editedBy: String
+    let ocrLanguages: [String]
+    let isConvertable: Bool
+    let isConverted: Bool
+    let errorList: [String]
+    let relatedFiles: [String]
     let createdAt: Date
     let updatedAt: Date
-    let createdBy: String
-    let updatedBy: String
-    let permissions: [String]
-    let isShared: Bool
-    let shareSettings: ShareSettings?
-    let metadata: [String: String]
-    let fileCount: Int
-    let folderCount: Int
-    let totalSize: Int64
+    let version: String?
+    let `extension`: String?
+    let watermarkedLink: String?
+    let upload: String?
+    
+    // Computed properties
+    var name: String {
+        return rawFileName
+    }
+    
+    var parentId: String? {
+        // Extract parent ID from parentPath if available
+        return nil // We'll need to implement this based on the actual structure
+    }
+    
+    var path: String {
+        return materializePath
+    }
+    
+    var permissions: [String] {
+        // Default permissions for now - we'll need to get these from the API
+        return ["list_folder_content", "download_document"]
+    }
+    
+    var isShared: Bool {
+        return (collaborators?.count ?? 0) > 1
+    }
+    
+    var shareSettings: ShareSettings? {
+        return nil // We'll implement this if needed
+    }
+    
+    var metadata: [String: String] {
+        var result: [String: String] = [:]
+        if let description = description {
+            result["description"] = description
+        }
+        if let ext = `extension` {
+            result["extension"] = ext
+        }
+        return result
+    }
+    
+    var folderCount: Int {
+        return isFolder ? 1 : 0 // This is a simplified approach
+    }
+    
+    var totalSize: Int64 {
+        return size
+    }
     
     // Computed properties
     var canSync: Bool {
@@ -54,150 +118,134 @@ struct FolderMetadata: Codable, Identifiable, Hashable {
     
     init(
         id: String,
-        name: String,
-        parentId: String?,
-        path: String,
+        rawFileName: String,
+        description: String?,
+        parentPath: String?,
+        materializePath: String,
+        originalCloudRelativePath: String?,
+        convertedCloudRelativePath: String?,
+        documentCategory: String?,
+        dataEntry: [DataEntry]?,
+        size: Int64,
+        portal: String,
+        fileCount: Int,
+        collaborators: [Collaborator]?,
+        isBeingTrashed: Bool,
+        isBeingMoved: Bool,
+        isBeingCopied: Bool,
+        isDepartment: Bool,
+        isFolder: Bool,
+        isFile: Bool,
+        isLocked: Bool?,
+        createdBy: String,
+        editedBy: String,
+        ocrLanguages: [String],
+        isConvertable: Bool,
+        isConverted: Bool,
+        errorList: [String],
+        relatedFiles: [String],
         createdAt: Date,
         updatedAt: Date,
-        createdBy: String,
-        updatedBy: String,
-        permissions: [String],
-        isShared: Bool,
-        shareSettings: ShareSettings?,
-        metadata: [String: String],
-        fileCount: Int,
-        folderCount: Int,
-        totalSize: Int64
+        version: String?,
+        `extension`: String?,
+        watermarkedLink: String?,
+        upload: String?
     ) {
         self.id = id
-        self.name = name
-        self.parentId = parentId
-        self.path = path
+        self.rawFileName = rawFileName
+        self.description = description
+        self.parentPath = parentPath
+        self.materializePath = materializePath
+        self.originalCloudRelativePath = originalCloudRelativePath
+        self.convertedCloudRelativePath = convertedCloudRelativePath
+        self.documentCategory = documentCategory
+        self.dataEntry = dataEntry
+        self.size = size
+        self.portal = portal
+        self.fileCount = fileCount
+        self.collaborators = collaborators
+        self.isBeingTrashed = isBeingTrashed
+        self.isBeingMoved = isBeingMoved
+        self.isBeingCopied = isBeingCopied
+        self.isDepartment = isDepartment
+        self.isFolder = isFolder
+        self.isFile = isFile
+        self.isLocked = isLocked
+        self.createdBy = createdBy
+        self.editedBy = editedBy
+        self.ocrLanguages = ocrLanguages
+        self.isConvertable = isConvertable
+        self.isConverted = isConverted
+        self.errorList = errorList
+        self.relatedFiles = relatedFiles
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        self.createdBy = createdBy
-        self.updatedBy = updatedBy
-        self.permissions = permissions
-        self.isShared = isShared
-        self.shareSettings = shareSettings
-        self.metadata = metadata
-        self.fileCount = fileCount
-        self.folderCount = folderCount
-        self.totalSize = totalSize
+        self.version = version
+        self.extension = `extension`
+        self.watermarkedLink = watermarkedLink
+        self.upload = upload
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, path, permissions, metadata, fileCount, folderCount, totalSize
-        case parentId = "parent_id"
+        case id
+        case rawFileName = "raw_file_name"
+        case description
+        case parentPath = "parent_path"
+        case materializePath = "materialize_path"
+        case originalCloudRelativePath = "original_cloud_relative_path"
+        case convertedCloudRelativePath = "converted_cloud_relative_path"
+        case documentCategory = "document_category"
+        case dataEntry = "data_entry"
+        case size
+        case portal
+        case fileCount = "file_count"
+        case collaborators
+        case isBeingTrashed = "is_being_trashed"
+        case isBeingMoved = "is_being_moved"
+        case isBeingCopied = "is_being_copied"
+        case isDepartment = "is_department"
+        case isFolder = "is_folder"
+        case isFile = "is_file"
+        case isLocked = "is_locked"
+        case createdBy = "created_by"
+        case editedBy = "edited_by"
+        case ocrLanguages = "ocr_languages"
+        case isConvertable = "is_convertable"
+        case isConverted = "is_converted"
+        case errorList = "error_list"
+        case relatedFiles = "related_files"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-        case createdBy = "created_by"
-        case updatedBy = "updated_by"
-        case isShared = "is_shared"
-        case shareSettings = "share_settings"
+        case version
+        case `extension`
+        case watermarkedLink = "watermarked_link"
+        case upload
     }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try container.decode(String.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        parentId = try container.decodeIfPresent(String.self, forKey: .parentId)
-        path = try container.decode(String.self, forKey: .path)
-        permissions = try container.decode([String].self, forKey: .permissions)
-        metadata = try container.decodeIfPresent([String: String].self, forKey: .metadata) ?? [:]
-        fileCount = try container.decodeIfPresent(Int.self, forKey: .fileCount) ?? 0
-        folderCount = try container.decodeIfPresent(Int.self, forKey: .folderCount) ?? 0
-        totalSize = try container.decodeIfPresent(Int64.self, forKey: .totalSize) ?? 0
-        isShared = try container.decodeIfPresent(Bool.self, forKey: .isShared) ?? false
-        shareSettings = try container.decodeIfPresent(ShareSettings.self, forKey: .shareSettings)
-        
-        // Parse dates
-        let createdAtString = try container.decode(String.self, forKey: .createdAt)
-        let updatedAtString = try container.decode(String.self, forKey: .updatedAt)
-        
-        let dateFormatter = ISO8601DateFormatter()
-        createdAt = dateFormatter.date(from: createdAtString) ?? Date()
-        updatedAt = dateFormatter.date(from: updatedAtString) ?? Date()
-        
-        createdBy = try container.decode(String.self, forKey: .createdBy)
-        updatedBy = try container.decode(String.self, forKey: .updatedBy)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(id, forKey: .id)
-        try container.encode(name, forKey: .name)
-        try container.encodeIfPresent(parentId, forKey: .parentId)
-        try container.encode(path, forKey: .path)
-        try container.encode(permissions, forKey: .permissions)
-        try container.encode(metadata, forKey: .metadata)
-        try container.encode(fileCount, forKey: .fileCount)
-        try container.encode(folderCount, forKey: .folderCount)
-        try container.encode(totalSize, forKey: .totalSize)
-        try container.encode(isShared, forKey: .isShared)
-        try container.encodeIfPresent(shareSettings, forKey: .shareSettings)
-        
-        let dateFormatter = ISO8601DateFormatter()
-        try container.encode(dateFormatter.string(from: createdAt), forKey: .createdAt)
-        try container.encode(dateFormatter.string(from: updatedAt), forKey: .updatedAt)
-        
-        try container.encode(createdBy, forKey: .createdBy)
-        try container.encode(updatedBy, forKey: .updatedBy)
-    }
+}
+
+// MARK: - Supporting Models
+
+struct DataEntry: Codable, Hashable {
+    let metadata: String
+    let name: String
+    let value: String?
+    let id: String
+}
+
+struct Collaborator: Codable, Hashable {
+    let buffer: String
 }
 
 struct ShareSettings: Codable, Hashable, Equatable {
     let isPublic: Bool
     let allowDownload: Bool
-    let allowUpload: Bool
+    let allowEdit: Bool
     let expirationDate: Date?
-    let password: String?
-    let allowedUsers: [String]
-    let allowedGroups: [String]
     
     enum CodingKeys: String, CodingKey {
         case isPublic = "is_public"
         case allowDownload = "allow_download"
-        case allowUpload = "allow_upload"
+        case allowEdit = "allow_edit"
         case expirationDate = "expiration_date"
-        case password
-        case allowedUsers = "allowed_users"
-        case allowedGroups = "allowed_groups"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        isPublic = try container.decode(Bool.self, forKey: .isPublic)
-        allowDownload = try container.decode(Bool.self, forKey: .allowDownload)
-        allowUpload = try container.decode(Bool.self, forKey: .allowUpload)
-        password = try container.decodeIfPresent(String.self, forKey: .password)
-        allowedUsers = try container.decodeIfPresent([String].self, forKey: .allowedUsers) ?? []
-        allowedGroups = try container.decodeIfPresent([String].self, forKey: .allowedGroups) ?? []
-        
-        if let expirationString = try container.decodeIfPresent(String.self, forKey: .expirationDate) {
-            let dateFormatter = ISO8601DateFormatter()
-            expirationDate = dateFormatter.date(from: expirationString)
-        } else {
-            expirationDate = nil
-        }
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(isPublic, forKey: .isPublic)
-        try container.encode(allowDownload, forKey: .allowDownload)
-        try container.encode(allowUpload, forKey: .allowUpload)
-        try container.encodeIfPresent(password, forKey: .password)
-        try container.encode(allowedUsers, forKey: .allowedUsers)
-        try container.encode(allowedGroups, forKey: .allowedGroups)
-        
-        if let expirationDate = expirationDate {
-            let dateFormatter = ISO8601DateFormatter()
-            try container.encode(dateFormatter.string(from: expirationDate), forKey: .expirationDate)
-        }
     }
 }

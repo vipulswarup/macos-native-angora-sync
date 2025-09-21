@@ -145,23 +145,7 @@ class FolderService: ObservableObject {
         // Convert departments to FolderMetadata format
         let departments = response.data.compactMap { department -> FolderMetadata? in
             guard let department = department else { return nil }
-            return FolderMetadata(
-                id: department.id,
-                name: department.rawFileName,
-                parentId: nil, // Departments are root-level
-                path: "/\(department.rawFileName)",
-                createdAt: Date(), // Use current date as fallback
-                updatedAt: Date(), // Use current date as fallback
-                createdBy: "system",
-                updatedBy: "system",
-                permissions: ["list_folder_content"], // Default permissions
-                isShared: false,
-                shareSettings: nil,
-                metadata: ["description": department.description ?? ""],
-                fileCount: 0, // Default values for departments
-                folderCount: 0,
-                totalSize: 0
-            )
+            return createFolderMetadataFromDepartment(department)
         }
         
         print("📁 Fetched \(departments.count) departments")
@@ -194,13 +178,31 @@ struct CreateFolderRequest: Codable {
 
 struct FolderListResponse: Codable {
     let status: Int
+    let meta: PaginationMeta?
     let data: [FolderMetadata?]
     let notifications: [String]
     let errors: [String]
 }
 
+struct PaginationMeta: Codable {
+    let currentPage: Int
+    let itemsPerPage: Int
+    let totalPages: Int
+    let totalRecords: Int
+    let hasMore: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case currentPage = "current_page"
+        case itemsPerPage = "items_per_page"
+        case totalPages = "total_pages"
+        case totalRecords = "total_records"
+        case hasMore = "has_more"
+    }
+}
+
 struct DepartmentListResponse: Codable {
     let status: Int
+    let meta: PaginationMeta?
     let data: [Department?]
     let notifications: [String]
     let errors: [String]
@@ -210,11 +212,21 @@ struct Department: Codable {
     let id: String
     let rawFileName: String
     let description: String?
+    let parentPath: String?
+    let materializePath: String
+    let isDepartment: Bool
+    let createdBy: String
+    let editedBy: String
     
     enum CodingKeys: String, CodingKey {
         case id
         case rawFileName = "raw_file_name"
         case description
+        case parentPath = "parent_path"
+        case materializePath = "materialize_path"
+        case isDepartment = "is_department"
+        case createdBy = "created_by"
+        case editedBy = "edited_by"
     }
 }
 
@@ -223,6 +235,50 @@ struct FolderDetailResponse: Codable {
     let data: FolderMetadata
     let notifications: [String]
     let errors: [String]
+}
+
+// MARK: - Helper Functions
+
+extension FolderService {
+    private func createFolderMetadataFromDepartment(_ department: Department) -> FolderMetadata {
+        // Create a FolderMetadata from Department data
+        // We need to provide all required fields for the new FolderMetadata structure
+        return FolderMetadata(
+            id: department.id,
+            rawFileName: department.rawFileName,
+            description: department.description,
+            parentPath: department.parentPath,
+            materializePath: department.materializePath,
+            originalCloudRelativePath: nil,
+            convertedCloudRelativePath: nil,
+            documentCategory: nil,
+            dataEntry: nil,
+            size: 0,
+            portal: "web",
+            fileCount: 0,
+            collaborators: nil,
+            isBeingTrashed: false,
+            isBeingMoved: false,
+            isBeingCopied: false,
+            isDepartment: department.isDepartment,
+            isFolder: true, // Departments are treated as folders
+            isFile: false,
+            isLocked: false,
+            createdBy: department.createdBy,
+            editedBy: department.editedBy,
+            ocrLanguages: [],
+            isConvertable: false,
+            isConverted: false,
+            errorList: [],
+            relatedFiles: [],
+            createdAt: Date(), // Use current date as fallback
+            updatedAt: Date(), // Use current date as fallback
+            version: nil,
+            extension: nil,
+            watermarkedLink: nil,
+            upload: nil
+        )
+    }
 }
 
 // MARK: - Error Types

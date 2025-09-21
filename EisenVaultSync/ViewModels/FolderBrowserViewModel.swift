@@ -37,6 +37,18 @@ class FolderBrowserViewModel: ObservableObject {
         return !selectedFolders.isEmpty && !isLoading
     }
     
+    var currentLevelTitle: String {
+        if breadcrumbs.count <= 1 {
+            return "Departments"
+        } else {
+            return "Folders"
+        }
+    }
+    
+    var isAtRootLevel: Bool {
+        return breadcrumbs.count <= 1
+    }
+    
     // MARK: - Initialization
     
     init() {
@@ -98,8 +110,14 @@ class FolderBrowserViewModel: ObservableObject {
         breadcrumbs.append(Breadcrumb(name: folder.name, id: folder.id))
         currentPath = folder.displayPath
         
-        // Load subfolders
+        // Load subfolders (this will work for both departments and folders)
         await loadFolders(parentId: folder.id)
+    }
+    
+    func canNavigateIntoFolder(_ folder: FolderMetadata) -> Bool {
+        // For now, assume all folders can be navigated into
+        // In the future, this could check permissions or folder type
+        return true
     }
     
     func navigateToBreadcrumb(_ breadcrumb: Breadcrumb) async {
@@ -149,6 +167,17 @@ class FolderBrowserViewModel: ObservableObject {
     
     func getSelectedFolders() -> [FolderMetadata] {
         return folders.filter { selectedFolders.contains($0.id) }
+    }
+    
+    func getSelectedItemsDescription() -> String {
+        let selectedItems = getSelectedFolders()
+        if selectedItems.isEmpty {
+            return "No items selected"
+        } else if selectedItems.count == 1 {
+            return "1 item selected: \(selectedItems.first?.name ?? "Unknown")"
+        } else {
+            return "\(selectedItems.count) items selected"
+        }
     }
     
     // MARK: - Sync Operations

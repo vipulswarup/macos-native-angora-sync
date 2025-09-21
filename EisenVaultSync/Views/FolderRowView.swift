@@ -4,6 +4,7 @@ struct FolderRowView: View {
     let folder: FolderMetadata
     let isSelected: Bool
     let isExpanded: Bool
+    let canNavigate: Bool
     let onSelectionToggle: () -> Void
     let onExpansionToggle: () -> Void
     let onNavigate: () -> Void
@@ -77,7 +78,7 @@ struct FolderRowView: View {
             }
             
             // Navigation arrow
-            if folder.folderCount > 0 {
+            if canNavigate {
                 Button(action: onNavigate) {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
@@ -165,23 +166,42 @@ struct FolderContextMenu: View {
         FolderRowView(
             folder: FolderMetadata(
                 id: "1",
-                name: "Documents",
-                parentId: nil,
-                path: "",
+                rawFileName: "Documents",
+                description: "Documents folder",
+                parentPath: nil,
+                materializePath: "/Documents",
+                originalCloudRelativePath: nil,
+                convertedCloudRelativePath: nil,
+                documentCategory: nil,
+                dataEntry: nil,
+                size: 1024 * 1024 * 5, // 5MB
+                portal: "web",
+                fileCount: 15,
+                collaborators: nil,
+                isBeingTrashed: false,
+                isBeingMoved: false,
+                isBeingCopied: false,
+                isDepartment: false,
+                isFolder: true,
+                isFile: false,
+                isLocked: false,
+                createdBy: "user1",
+                editedBy: "user1",
+                ocrLanguages: [],
+                isConvertable: false,
+                isConverted: false,
+                errorList: [],
+                relatedFiles: [],
                 createdAt: Date(),
                 updatedAt: Date(),
-                createdBy: "user1",
-                updatedBy: "user1",
-                permissions: ["list_folder_content", "download_document"],
-                isShared: false,
-                shareSettings: nil,
-                metadata: [:],
-                fileCount: 15,
-                folderCount: 3,
-                totalSize: 1024 * 1024 * 5 // 5MB
+                version: nil,
+                extension: nil,
+                watermarkedLink: nil,
+                upload: nil
             ),
             isSelected: false,
             isExpanded: false,
+            canNavigate: true,
             onSelectionToggle: {},
             onExpansionToggle: {},
             onNavigate: {}
@@ -190,23 +210,42 @@ struct FolderContextMenu: View {
         FolderRowView(
             folder: FolderMetadata(
                 id: "2",
-                name: "Shared Folder",
-                parentId: nil,
-                path: "",
+                rawFileName: "Shared Folder",
+                description: "Shared folder",
+                parentPath: nil,
+                materializePath: "/Shared Folder",
+                originalCloudRelativePath: nil,
+                convertedCloudRelativePath: nil,
+                documentCategory: nil,
+                dataEntry: nil,
+                size: 1024 * 1024 * 2, // 2MB
+                portal: "web",
+                fileCount: 8,
+                collaborators: [Collaborator(buffer: "user1"), Collaborator(buffer: "user2")],
+                isBeingTrashed: false,
+                isBeingMoved: false,
+                isBeingCopied: false,
+                isDepartment: false,
+                isFolder: true,
+                isFile: false,
+                isLocked: false,
+                createdBy: "user1",
+                editedBy: "user1",
+                ocrLanguages: [],
+                isConvertable: false,
+                isConverted: false,
+                errorList: [],
+                relatedFiles: [],
                 createdAt: Date(),
                 updatedAt: Date(),
-                createdBy: "user1",
-                updatedBy: "user1",
-                permissions: ["list_folder_content", "download_document"],
-                isShared: true,
-                shareSettings: nil,
-                metadata: [:],
-                fileCount: 8,
-                folderCount: 1,
-                totalSize: 1024 * 1024 * 2 // 2MB
+                version: nil,
+                extension: nil,
+                watermarkedLink: nil,
+                upload: nil
             ),
             isSelected: true,
             isExpanded: false,
+            canNavigate: false,
             onSelectionToggle: {},
             onExpansionToggle: {},
             onNavigate: {}

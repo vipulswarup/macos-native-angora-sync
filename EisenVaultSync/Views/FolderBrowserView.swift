@@ -55,8 +55,17 @@ struct FolderBrowserView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                 
-                if let activeAccount = accountManager.activeAccount {
-                    Text("Account: \(activeAccount.name ?? "Unknown")")
+                HStack(spacing: 8) {
+                    if let activeAccount = accountManager.activeAccount {
+                        Text("Account: \(activeAccount.name ?? "Unknown")")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Text("•")
+                        .foregroundColor(.secondary)
+                    
+                    Text(viewModel.currentLevelTitle)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -195,6 +204,7 @@ struct FolderBrowserView: View {
                     folder: folder,
                     isSelected: viewModel.isFolderSelected(folder.id),
                     isExpanded: viewModel.isFolderExpanded(folder.id),
+                    canNavigate: viewModel.canNavigateIntoFolder(folder),
                     onSelectionToggle: {
                         viewModel.toggleFolderSelection(folder.id)
                     },
@@ -224,12 +234,12 @@ struct FolderBrowserView: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("\(viewModel.filteredFolders.count) folders")
+                    Text("\(viewModel.filteredFolders.count) \(viewModel.currentLevelTitle.lowercased())")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
                     if viewModel.selectedFolderCount > 0 {
-                        Text("\(viewModel.selectedFolderCount) selected")
+                        Text(viewModel.getSelectedItemsDescription())
                             .font(.caption)
                             .foregroundColor(.blue)
                     }
