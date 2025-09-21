@@ -24,6 +24,14 @@
 		9C79519B2E72B35900B95CA6 /* AccountManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */; };
 		9C79519D2E72B35900B95CA6 /* AccountManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */; };
 		9C7951A12E72B35900B95CA6 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */; };
+		AA000000000000000048 /* FolderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000049 /* FolderService.swift */; };
+		AA000000000000000050 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000051 /* FileService.swift */; };
+		AA000000000000000052 /* FolderMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000053 /* FolderMetadata.swift */; };
+		AA000000000000000054 /* FileMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000055 /* FileMetadata.swift */; };
+		AA000000000000000056 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000057 /* SyncFolder.swift */; };
+		AA000000000000000058 /* FolderBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000059 /* FolderBrowserView.swift */; };
+		AA000000000000000060 /* FolderRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000061 /* FolderRowView.swift */; };
+		AA000000000000000062 /* FolderBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000063 /* FolderBrowserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +52,14 @@
 		9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerView.swift; sourceTree = "<group>"; };
 		9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerViewModel.swift; sourceTree = "<group>"; };
 		9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
+		AA000000000000000049 /* FolderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderService.swift; sourceTree = "<group>"; };
+		AA000000000000000051 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		AA000000000000000053 /* FolderMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderMetadata.swift; sourceTree = "<group>"; };
+		AA000000000000000055 /* FileMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMetadata.swift; sourceTree = "<group>"; };
+		AA000000000000000057 /* SyncFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncFolder.swift; sourceTree = "<group>"; };
+		AA000000000000000059 /* FolderBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderBrowserView.swift; sourceTree = "<group>"; };
+		AA000000000000000061 /* FolderRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderRowView.swift; sourceTree = "<group>"; };
+		AA000000000000000063 /* FolderBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderBrowserViewModel.swift; sourceTree = "<group>"; };
 		AA000000000000000025 /* EisenVaultSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EisenVaultSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000000000000000026 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA000000000000000027 /* EisenVaultSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EisenVaultSync.entitlements; sourceTree = "<group>"; };
@@ -77,6 +93,8 @@
 				AA000000000000000033 /* Core */,
 				9C79519F2E72B35900B95CA6 /* Views */,
 				9C7951A02E72B35900B95CA6 /* ViewModels */,
+				AA000000000000000064 /* Services */,
+				AA000000000000000065 /* Models */,
 				AA000000000000000006 /* Assets.xcassets */,
 				AA000000000000000026 /* Info.plist */,
 				AA000000000000000027 /* EisenVaultSync.entitlements */,
@@ -123,6 +141,8 @@
 			children = (
 				9C79519C2E72B35900B95CA6 /* AccountManagerView.swift */,
 				9C7951A22E72B35900B95CA6 /* ErrorAlertView.swift */,
+				AA000000000000000059 /* FolderBrowserView.swift */,
+				AA000000000000000061 /* FolderRowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -131,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				9C79519E2E72B35900B95CA6 /* AccountManagerViewModel.swift */,
+				AA000000000000000063 /* FolderBrowserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -146,6 +167,25 @@
 		AA000000000000000035 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA000000000000000064 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA000000000000000049 /* FolderService.swift */,
+				AA000000000000000051 /* FileService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AA000000000000000065 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA000000000000000053 /* FolderMetadata.swift */,
+				AA000000000000000055 /* FileMetadata.swift */,
+				AA000000000000000057 /* SyncFolder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -235,6 +275,14 @@
 				AA000000000000000019 /* NetworkManager.swift in Sources */,
 				AA000000000000000023 /* PersistenceController.swift in Sources */,
 				AA000000000000000001 /* EisenVaultSyncApp.swift in Sources */,
+				AA000000000000000048 /* FolderService.swift in Sources */,
+				AA000000000000000050 /* FileService.swift in Sources */,
+				AA000000000000000052 /* FolderMetadata.swift in Sources */,
+				AA000000000000000054 /* FileMetadata.swift in Sources */,
+				AA000000000000000056 /* SyncFolder.swift in Sources */,
+				AA000000000000000058 /* FolderBrowserView.swift in Sources */,
+				AA000000000000000060 /* FolderRowView.swift in Sources */,
+				AA000000000000000062 /* FolderBrowserViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +427,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisenvault.sync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -407,7 +455,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisenvault.sync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

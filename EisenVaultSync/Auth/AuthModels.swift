@@ -34,7 +34,7 @@ struct User: Codable {
     let mobile: String?
     let timezone: String
     let locale: String
-    let permissions: [String: String]
+    let permissions: [String]
     let nextStep: String
     let storageUsed: Double
     let storageLimit: Double
@@ -118,7 +118,7 @@ struct TokenVerificationData: Codable {
     let twoFactorProfileLocked: Bool
     let mobile: String?
     let landline: String?
-    let permissions: [String: String]
+    let permissions: [String]
     
     enum CodingKeys: String, CodingKey {
         case id, firstname, lastname, email, avatar, signature, mobile, landline, permissions

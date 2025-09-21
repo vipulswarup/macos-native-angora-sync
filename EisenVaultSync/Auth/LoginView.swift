@@ -4,7 +4,7 @@ struct LoginView: View {
     @EnvironmentObject var authService: AuthService
     @State private var email = "pankaj.singh@eisenvault.com"
     @State private var password = "Admin@765"
-    @State private var serverURL = "https://binod.angorastage.in"
+    @State private var serverURL = "https://jyothi.angoradev.in"
     @State private var showPassword = false
     
     var body: some View {
@@ -29,7 +29,7 @@ struct LoginView: View {
                     Text("Server URL")
                         .font(.headline)
                     
-                    TextField("https://binod.angorastage.in", text: $serverURL)
+                    TextField("https://jyothi.angoradev.in", text: $serverURL)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
                 }

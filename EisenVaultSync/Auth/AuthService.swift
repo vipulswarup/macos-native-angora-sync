@@ -15,12 +15,12 @@ class AuthService: ObservableObject {
         checkExistingAuth()
     }
     
-    func login(email: String, password: String, serverURL: String = "https://binod.angorastage.in") async {
+    func login(email: String, password: String, serverURL: String = "https://jyothi.angoradev.in") async {
         print("🔐 Starting login process...")
         print("🔐 Email: \(email)")
         print("🔐 Server URL: \(serverURL)")
         
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.authState = .loading
         }
         

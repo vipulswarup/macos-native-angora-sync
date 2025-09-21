@@ -205,6 +205,117 @@ extension NetworkManager {
             }
         }
     }
+    
+    func downloadFile(
+        from url: URL,
+        to localURL: URL,
+        headers: [String: String] = [:]
+    ) async throws -> URL {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        // Set custom headers
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        
+        print("📥 Downloading file from: \(url.absoluteString)")
+        print("📥 Saving to: \(localURL.path)")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+            
+            print("📥 Download response status: \(httpResponse.statusCode)")
+            
+            guard 200...299 ~= httpResponse.statusCode else {
+                print("❌ Download failed with status: \(httpResponse.statusCode)")
+                throw NetworkError.httpError(httpResponse.statusCode)
+            }
+            
+            // Create directory if it doesn't exist
+            let directory = localURL.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
+            
+            // Write data to file
+            try data.write(to: localURL)
+            
+            print("📥 File downloaded successfully to: \(localURL.path)")
+            return localURL
+            
+        } catch {
+            print("❌ Download error: \(error.localizedDescription)")
+            throw NetworkError.networkError(error.localizedDescription)
+        }
+    }
+    
+    func uploadFile<T: Codable>(
+        from localURL: URL,
+        to url: URL,
+        fileName: String,
+        headers: [String: String] = [:],
+        responseType: T.Type
+    ) async throws -> T {
+        // Create multipart form data
+        let boundary = "Boundary-\(UUID().uuidString)"
+        var body = Data()
+        
+        // Add file data
+        let fileData = try Data(contentsOf: localURL)
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
+        body.append(fileData)
+        body.append("\r\n".data(using: .utf8)!)
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        // Set custom headers
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        
+        print("📤 Uploading file: \(fileName) to: \(url.absoluteString)")
+        print("📤 File size: \(fileData.count) bytes")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
+            }
+            
+            print("📤 Upload response status: \(httpResponse.statusCode)")
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("📤 Upload response body: \(responseString)")
+            }
+            
+            guard 200...299 ~= httpResponse.statusCode else {
+                print("❌ Upload failed with status: \(httpResponse.statusCode)")
+                throw NetworkError.httpError(httpResponse.statusCode)
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                return try decoder.decode(T.self, from: data)
+            } catch {
+                print("❌ Upload response decoding error: \(error)")
+                throw NetworkError.decodingError(error)
+            }
+            
+        } catch {
+            print("❌ Upload error: \(error.localizedDescription)")
+            throw NetworkError.networkError(error.localizedDescription)
+        }
+    }
 }
 
 enum HTTPMethod: String {

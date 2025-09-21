@@ -528,6 +528,38 @@
           ]
         },
         {
+          "name": "Departments",
+          "item": [
+            {
+              "name": "Get Departments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/departments?slim=true",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "departments"],
+                  "query": [
+                    {
+                      "key": "slim",
+                      "value": "true"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
           "name": "Folders",
           "item": [
             {

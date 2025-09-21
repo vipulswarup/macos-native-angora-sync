@@ -25,12 +25,19 @@ struct MainView: View {
                 }
                 .tag(0)
             
+            FolderBrowserView()
+                .tabItem {
+                    Image(systemName: "folder")
+                    Text("Folders")
+                }
+                .tag(1)
+            
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
                 }
-                .tag(1)
+                .tag(2)
         }
         .frame(width: 800, height: 600)
     }
@@ -183,6 +190,10 @@ struct SettingsView: View {
                         .font(.headline)
                     
                     Text("EisenVault Sync")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Text("Version 0.0.1")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
